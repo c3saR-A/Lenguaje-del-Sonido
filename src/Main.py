@@ -10,9 +10,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Conecta el botón "Analizar" a una función
         self.btnAnalizar.clicked.connect(self.analizar_sonido)
 
+        # Conecta el boton "Generar Tono" a un función
+        self.btnGenerarTono.clicked.connect(self.activar_controles)
+
+        self.btnCancelarTono.clicked.connect(self.desactivar_controles)
+
     def analizar_sonido(self):
         # Aquí va el código para analizar el sonido
         print("Analizando sonido...")
+
+    def activar_controles(self):
+
+        self.gbControles.setEnabled(True)
+
+    def desactivar_controles(self):
+        self.gbControles.setEnabled(False)
+
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

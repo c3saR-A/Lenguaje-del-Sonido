@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -55,8 +58,8 @@
    <widget class="QPushButton" name="btnReproducir">
     <property name="geometry">
      <rect>
-      <x>810</x>
-      <y>660</y>
+      <x>990</x>
+      <y>630</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -77,11 +80,17 @@
     <property name="text">
      <string>Guardar</string>
     </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>24</height>
+     </size>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnAnalizar">
     <property name="geometry">
      <rect>
-      <x>990</x>
+      <x>810</x>
       <y>660</y>
       <width>75</width>
       <height>24</height>
@@ -143,91 +152,173 @@
 </string>
     </property>
    </widget>
-   <widget class="QLabel" name="lblFrecuencia">
+   <widget class="QPushButton" name="btnGenerarTono">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>660</y>
+      <y>570</y>
       <width>91</width>
-      <height>16</height>
+      <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>Frecuencia (Hz):</string>
+     <string>Generar Tono</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lblAmplitud">
+   <widget class="QGroupBox" name="gbControles">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>660</y>
-      <width>61</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Amplitud:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txtFrecuencia">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>660</y>
-      <width>61</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QSlider" name="sldAmplitud">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>660</y>
-      <width>160</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Orientation::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="gbTipoFuncion">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>650</y>
-      <width>171</width>
-      <height>41</height>
+      <x>10</x>
+      <y>600</y>
+      <width>581</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="title">
-     <string/>
+     <string>Controles</string>
     </property>
-    <widget class="QRadioButton" name="rbSeno">
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <widget class="QPushButton" name="btnCancelarTono">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>60</y>
+       <width>91</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cancelar Tono</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblFrecuencia">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
-       <width>61</width>
-       <height>20</height>
+       <y>20</y>
+       <width>91</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Seno</string>
+      <string>Frecuencia (Hz):</string>
      </property>
     </widget>
-    <widget class="QRadioButton" name="rbCoseno">
+    <widget class="QGroupBox" name="gbTipoFuncion">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>10</y>
+       <width>171</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <widget class="QRadioButton" name="rbSeno">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>61</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Seno</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rbCoseno">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>10</y>
+        <width>71</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Coseno</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="lblAmplitud">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>20</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Amplitud:</string>
+     </property>
+    </widget>
+    <widget class="QSlider" name="sldAmplitud">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>20</y>
+       <width>160</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnStop">
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>10</y>
-       <width>71</width>
-       <height>20</height>
+       <y>60</y>
+       <width>75</width>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">
-      <string>Coseno</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>C:/Users/Alexander Cortez/OneDrive/Escritorio/stop.svg</normaloff>C:/Users/Alexander Cortez/OneDrive/Escritorio/stop.svg</iconset>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtFrecuencia">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>61</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnPlay">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>75</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>C:/Users/Alexander Cortez/OneDrive/Escritorio/play.svg</normaloff>C:/Users/Alexander Cortez/OneDrive/Escritorio/play.svg</iconset>
      </property>
     </widget>
    </widget>
