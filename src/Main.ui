@@ -32,72 +32,124 @@
    <widget class="QPushButton" name="btnCargar">
     <property name="geometry">
      <rect>
-      <x>890</x>
-      <y>660</y>
-      <width>91</width>
+      <x>920</x>
+      <y>490</y>
+      <width>111</width>
       <height>24</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Cargar Archivo</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normalon>../assets/upload.svg</normalon>
+     </iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="btnGrabar">
     <property name="geometry">
      <rect>
-      <x>810</x>
-      <y>630</y>
+      <x>50</x>
+      <y>490</y>
       <width>75</width>
       <height>24</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Grabar</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normalon>../assets/microphone_fill.svg</normalon>
+     </iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>16</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="btnReproducir">
     <property name="geometry">
      <rect>
-      <x>990</x>
-      <y>630</y>
-      <width>75</width>
+      <x>130</x>
+      <y>490</y>
+      <width>91</width>
       <height>24</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Reproducir</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normalon>../assets/play.svg</normalon>
+     </iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="btnGuardar">
     <property name="geometry">
      <rect>
-      <x>890</x>
-      <y>630</y>
+      <x>820</x>
+      <y>490</y>
       <width>91</width>
       <height>23</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
+    </property>
     <property name="text">
      <string>Guardar</string>
     </property>
+    <property name="icon">
+     <iconset>
+      <normalon>../assets/folder.svg</normalon>
+     </iconset>
+    </property>
     <property name="iconSize">
      <size>
-      <width>24</width>
-      <height>24</height>
+      <width>16</width>
+      <height>16</height>
      </size>
     </property>
    </widget>
    <widget class="QPushButton" name="btnAnalizar">
     <property name="geometry">
      <rect>
-      <x>810</x>
-      <y>660</y>
+      <x>330</x>
+      <y>490</y>
       <width>75</width>
       <height>24</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
+    </property>
     <property name="text">
      <string>Analizar</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normalon>../assets/waves-left.svg</normalon>
+     </iconset>
     </property>
    </widget>
    <widget class="QScrollArea" name="scrollArea">
@@ -164,6 +216,9 @@
       <height>24</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Generar Tono</string>
     </property>
@@ -186,7 +241,7 @@
     <property name="checked">
      <bool>false</bool>
     </property>
-    <widget class="QPushButton" name="btnCancelarTono">
+    <widget class="QPushButton" name="gbtnCancelarTono">
      <property name="geometry">
       <rect>
        <x>480</x>
@@ -194,6 +249,9 @@
        <width>91</width>
        <height>24</height>
       </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="text">
       <string>Cancelar Tono</string>
@@ -224,7 +282,13 @@
      <property name="title">
       <string/>
      </property>
-     <widget class="QRadioButton" name="rbSeno">
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <widget class="QRadioButton" name="grbSeno">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -233,11 +297,14 @@
         <height>20</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string>Seno</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="rbCoseno">
+     <widget class="QRadioButton" name="grbCoseno">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -246,8 +313,23 @@
         <height>20</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string>Coseno</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="autoRepeat">
+       <bool>false</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -273,11 +355,41 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="singleStep">
+      <number>1</number>
+     </property>
+     <property name="pageStep">
+      <number>10</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="tracking">
+      <bool>true</bool>
+     </property>
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="invertedControls">
+      <bool>false</bool>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::TickPosition::TicksBothSides</enum>
+     </property>
+     <property name="tickInterval">
+      <number>0</number>
+     </property>
     </widget>
-    <widget class="QPushButton" name="btnStop">
+    <widget class="QPushButton" name="gbtnDetener">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -286,12 +398,15 @@
        <height>24</height>
       </rect>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string/>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>C:/Users/Alexander Cortez/OneDrive/Escritorio/stop.svg</normaloff>C:/Users/Alexander Cortez/OneDrive/Escritorio/stop.svg</iconset>
+       <normaloff>../assets/stop.svg</normaloff>../assets/stop.svg</iconset>
      </property>
     </widget>
     <widget class="QLineEdit" name="txtFrecuencia">
@@ -304,7 +419,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnPlay">
+    <widget class="QPushButton" name="gbtnReproducir">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -313,14 +428,38 @@
        <height>24</height>
       </rect>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string/>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>C:/Users/Alexander Cortez/OneDrive/Escritorio/play.svg</normaloff>C:/Users/Alexander Cortez/OneDrive/Escritorio/play.svg</iconset>
+       <normaloff>../assets/play.svg</normaloff>../assets/play.svg</iconset>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="btnDetener">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>490</y>
+      <width>91</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>Detener</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normalon>../assets/stop.svg</normalon>
+     </iconset>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

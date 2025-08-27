@@ -10,21 +10,32 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Conecta el botón "Analizar" a una función
         self.btnAnalizar.clicked.connect(self.analizar_sonido)
 
-        # Conecta el boton "Generar Tono" a un función
+        # Conecta el boton "Generar Tono" a una función
         self.btnGenerarTono.clicked.connect(self.activar_controles)
 
-        self.btnCancelarTono.clicked.connect(self.desactivar_controles)
+        # Conecta el boton "Cancelar Tono" a una función
+        self.gbtnCancelarTono.clicked.connect(self.desactivar_controles)
 
+    # todo aplicar Fourier
     def analizar_sonido(self):
         # Aquí va el código para analizar el sonido
         print("Analizando sonido...")
 
     def activar_controles(self):
-
+        self.grbSeno.setCheckable(True)
+        self.grbCoseno.setCheckable(True)
         self.gbControles.setEnabled(True)
 
     def desactivar_controles(self):
+        self.txtFrecuencia.clear()
+        self.sldAmplitud.setValue(0)
+        self.grbSeno.setCheckable(False)
+        self.grbCoseno.setCheckable(False)
         self.gbControles.setEnabled(False)
+
+    # todo capturar datos de controles
+    # todo generar grafica con los datos de controles
+    # todo poner grafica en interfaz
 
 
 
