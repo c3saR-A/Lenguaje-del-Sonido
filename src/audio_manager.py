@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 class AudioManager:
     def __init__(self):
+        
         pass
 
     def reproducir_tono(self, frecuencia: int, amplitud: int, funcion: str):
