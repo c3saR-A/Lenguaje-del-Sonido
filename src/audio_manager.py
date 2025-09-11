@@ -1,26 +1,26 @@
 import numpy as np
-import matplotlib.pyplot as plt
+import sounddevice as sd
 
 class AudioManager:
     def __init__(self):
-        
-        pass
+        self.stream = None
+        self.duracion : float = 30.0 # 30s
+        self.samplerate : int = 44100 # Tasa de muestreo en Hz, estándar
 
-    def reproducir_tono(self, frecuencia: int, amplitud: int, funcion: str):
-        # todo lógica para genera y reproducir onda
+    def generar_datos_onda(self, frecuencia: str, amplitud: int, funcion: str):
 
-        print(f"Datos: \n"
-              f"Fr: {frecuencia} \n"
-              f"Am: {amplitud} \n"
-              f"Fun: {funcion}")
+        frecuencia_int = int(frecuencia)
+        t = np.linspace(0, self.duracion, int(self.duracion * self.samplerate), endpoint=False)
 
         if funcion == "Seno":
-            x = np.linspace(-np.pi, np.pi, 10)
-            print(f"Onda: {np.sin(x)}")
+            onda = amplitud * np.sin(2 * np.pi * frecuencia_int * t)
         else:
-            onda = np.cos()
-            print(f"Onda: {onda}")
+            onda = amplitud * np.cos(2 * np.pi * frecuencia_int * t)
 
-    def detener_tono(self):
-        # todo logica para detener tono
-        pass
+        return onda
+
+    def reproducir_onda(self, onda):
+            sd.play(onda, self.samplerate, blocking=False)
+
+    def detener_onda(self):
+        sd.stop()

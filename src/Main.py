@@ -68,23 +68,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print("No se seleccionó un archivo o hubo un error.")
     
     def reproducir_sonido(self):
-        frecuencia: int = self.txtFrecuencia.text()
+        frecuencia: str = self.txtFrecuencia.text()
         amplitud: int = self.sldAmplitud.value()
         funcion: str = "Coseno" if self.grbCoseno.isChecked() else "Seno"
         
-        # envio de datos a la clase AudioManager
-        self.audio_manager.reproducir_tono(frecuencia, amplitud, funcion)
+        # Envio de datos para generar onda
+        onda = self.audio_manager.generar_datos_onda(frecuencia, amplitud, funcion)
+
+        # reproducir onda
+        self.audio_manager.reproducir_onda(onda)
         
-        # todo devolver datos y poner grafica en la interfaz
+        # todo tomar la onda y realizar grafica en la interfaz
     
     def detener_sonido(self):
-        # todo algo
-        pass
-    
+        self.audio_manager.detener_onda()
 
 
 if __name__ == "__main__":
+
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
+
