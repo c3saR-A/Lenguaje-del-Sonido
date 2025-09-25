@@ -1,11 +1,18 @@
 import sys
+import numpy as np
 from PySide6.QtWidgets import QApplication, QMainWindow
-from Main_ui import Ui_MainWindow # Importanción de la interfaz
+from Main_ui import Ui_MainWindow  # Importación de la interfaz
+from save_audio import SaveAudioHandler
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        # Instancia del manejador del botón Guardar
+        self.save_handler = SaveAudioHandler(self)
+
+        # Conectar el botón Guardar
+        self.btnGuardar.clicked.connect(lambda: self.save_handler.guardar_audio(None))
 
         # Conecta el botón "Analizar" a una función
         self.btnAnalizar.clicked.connect(self.analizar_sonido)
