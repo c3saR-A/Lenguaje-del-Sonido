@@ -9,14 +9,12 @@ from controlers_manager import AudioManager
 from upload_file import UploadFile
 from save_audio import SaveAudioHandler
 
-
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
-
-      # Herencia de las clases
+      # Instancias de las clases
         self.audio_manager = AudioManager()
         self.upload_file = UploadFile()
         self.save_handler = SaveAudioHandler(self)
@@ -54,6 +52,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.grbSeno.setCheckable(False)
         self.grbCoseno.setCheckable(False)
         self.gbControles.setEnabled(False)
+        self.detener_sonido()
         
     # Funciones para la logica
     

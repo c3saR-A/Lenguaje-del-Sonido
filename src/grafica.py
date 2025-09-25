@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 import numpy as np
 
 class MplCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
+    def __init__(self, parent=None, width=5, height=4, dpi=100, animation_on = True):
         fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = fig.add_subplot(111)
         super().__init__(fig)
@@ -13,12 +13,16 @@ class MplCanvas(FigureCanvas):
         self.animacion = None
         self.onda_info = None
         self.offset = 0
+        self.animation_on = animation_on
         
     def iniciar_animacion(self, onda):
+        if not self.animation_on:
+            return
+
         self.axes.cla()
         self.onda_info = onda
         self.offset = 0
-        puntos_mostrar = 500
+        puntos_mostrar = 1000
         self.axes.set_ylim(-100, 100)
         self.axes.set_xlim(0, puntos_mostrar)
 
@@ -43,7 +47,7 @@ class MplCanvas(FigureCanvas):
             self.figure,
             self.actualizar_linea,
             frames=np.arange(len(onda)),
-            interval=1,
+            interval=15,
             blit=True,
         )
         self.draw()
