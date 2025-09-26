@@ -26,19 +26,8 @@ class MplCanvas(FigureCanvas):
         self.axes.set_ylim(-100, 100)
         self.axes.set_xlim(0, puntos_mostrar)
 
-        # oculta los números o valores
-        self.axes.set_xticklabels([])
-        self.axes.set_yticklabels([])
-
-        # Ocultar los ticks de los ejes
-        self.axes.tick_params(axis='x', which='both', bottom=False, top=False)
-        self.axes.tick_params(axis='y', which='both', left=False, right=False)
-
-        # Ocultar el recuadro de la gráfica
-        self.axes.spines['top'].set_visible(False)
-        self.axes.spines['right'].set_visible(False)
-        self.axes.spines['bottom'].set_visible(False)
-        self.axes.spines['left'].set_visible(False)
+        # Oculto todos los elemtos alrededor y solo aparece la gráfica
+        self.axes.set_axis_off()
 
         self.linea, = self.axes.plot(self.onda_info[:puntos_mostrar])
         
