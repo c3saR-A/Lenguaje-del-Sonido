@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::ApplicationModal</enum>
+  </property>
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -12,6 +15,12 @@
     <width>1080</width>
     <height>720</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
@@ -28,12 +37,33 @@
   <property name="windowTitle">
    <string>Lenguaje del Sonido</string>
   </property>
+  <property name="layoutDirection">
+   <enum>Qt::LayoutDirection::LeftToRight</enum>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::TabShape::Rounded</enum>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="btnCargar">
     <property name="geometry">
      <rect>
       <x>920</x>
-      <y>490</y>
+      <y>500</y>
       <width>111</width>
       <height>24</height>
      </rect>
@@ -53,8 +83,8 @@
    <widget class="QPushButton" name="btnGrabar">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>490</y>
+      <x>40</x>
+      <y>500</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -80,8 +110,8 @@
    <widget class="QPushButton" name="btnReproducir">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>490</y>
+      <x>120</x>
+      <y>500</y>
       <width>91</width>
       <height>24</height>
      </rect>
@@ -102,7 +132,7 @@
     <property name="geometry">
      <rect>
       <x>820</x>
-      <y>490</y>
+      <y>500</y>
       <width>91</width>
       <height>23</height>
      </rect>
@@ -131,8 +161,8 @@
    <widget class="QPushButton" name="btnAnalizar">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>490</y>
+      <x>320</x>
+      <y>500</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -155,11 +185,14 @@
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>120</y>
-      <width>980</width>
+      <x>40</x>
+      <y>130</y>
+      <width>991</width>
       <height>360</height>
      </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LayoutDirection::LeftToRight</enum>
     </property>
     <property name="widgetResizable">
      <bool>true</bool>
@@ -169,27 +202,23 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>978</width>
+       <width>989</width>
        <height>358</height>
       </rect>
      </property>
-     <widget class="QWidget" name="widget" native="true">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>5</y>
-        <width>880</width>
-        <height>85</height>
-       </rect>
-      </property>
-     </widget>
+     <property name="layoutDirection">
+      <enum>Qt::LayoutDirection::LeftToRight</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
     </widget>
    </widget>
    <widget class="QLabel" name="lblTitulo">
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>10</y>
+      <y>0</y>
       <width>881</width>
       <height>41</height>
      </rect>
@@ -443,8 +472,8 @@
    <widget class="QPushButton" name="btnDetener">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>490</y>
+      <x>220</x>
+      <y>500</y>
       <width>91</width>
       <height>24</height>
      </rect>
@@ -459,6 +488,22 @@
      <iconset>
       <normalon>../assets/stop.svg</normalon>
      </iconset>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblInfoArchivo">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>80</y>
+      <width>371</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

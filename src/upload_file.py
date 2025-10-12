@@ -1,3 +1,5 @@
+import os
+
 import soundfile as sf
 from PySide6.QtWidgets import QFileDialog
 class UploadFile:
@@ -12,13 +14,16 @@ class UploadFile:
         archivo_path, _ = QFileDialog.getOpenFileName(
             caption="Seleccionar archivo de audio",
             dir="",
-            filter="Archivo de audio (*.wav *.mp3 *.ogg);;Todos los archivos"
+            filter="Archivo de audio (*.wav *.mp3 *.ogg *.flac);;Todos los archivos"
         )
 
         if archivo_path:
             try:
                 datos_audio, samplerate = sf.read(archivo_path)
-                return datos_audio, samplerate
+                nombre_archivo = os.path.basename(archivo_path)
+
+                return datos_audio, samplerate, nombre_archivo
             except Exception as e:
                 print(f"Error al cargar archivo: {e}")
-        return None, None
+
+        return None, None, None
