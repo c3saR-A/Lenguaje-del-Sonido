@@ -15,10 +15,18 @@ class AudioManager:
         else:
             onda = amplitud * np.cos(2 * np.pi * frecuencia * tiempo)
 
-        return onda
+        return onda.astype(np.float32)
 
     def reproducir_onda(self, onda):
+            self.detener_sonido()
             sd.play(onda, self.samplerate, blocking=False)
 
-    def detener_onda(self):
+    def reproducir_archivo_cargado(self, datos_audio: np.ndarray, samplerate: int):
+
+        self.detener_sonido()
+        sd.play(datos_audio, samplerate, blocking=False)
+
+    @staticmethod
+    def detener_sonido():
+
         sd.stop()

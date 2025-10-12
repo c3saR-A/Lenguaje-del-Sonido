@@ -98,7 +98,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.information(self, "Sin Audio", "Primero debe cargar o grabar un archivo de audio.")
 
     def detener_sonido(self):
-        self.audio_manager.detener_onda()
+        self.audio_manager.detener_sonido()
         self.limpiar_graficas()
         
     def mostrar_grafica_tono(self, onda):
@@ -143,9 +143,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # 1. Mostrar feedback en la interfaz
             info = (
                 f"Archivo: {nombre_archivo}\n"
+                f"Duración: {duracion_segundos:.2f}s\n"
                 f"Tasa de muestreo: {samplerate} Hz\n"
-                f"Muestras: {len(datos_audio)}\n"
-                f"Duración: {duracion_segundos:.2f} s"
+                f"Muestras: {len(datos_audio)}"
+
             )
             # Asume que existe self.lblInfoArchivo para mostrar esto
             if hasattr(self, 'lblInfoArchivo'):
