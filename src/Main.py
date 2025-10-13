@@ -139,10 +139,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.samplerate_cargado = samplerate
             self.nombre_archivo_cargado = nombre_archivo
 
-            # Cáculo de duración para feedback
+            # Calculo de duracion
             duracion_segundos = len(datos_audio) / samplerate
 
-            # 1. Mostrar feedback en la interfaz
+            # Info a mostrar
             info = (
                 f"Archivo: {nombre_archivo}\n"
                 f"Duración: {duracion_segundos:.2f}s\n"
@@ -150,17 +150,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 f"Muestras: {len(datos_audio)}"
 
             )
-            # Asume que existe self.lblInfoArchivo para mostrar esto
+
             if hasattr(self, 'lblInfoArchivo'):
                 self.lblInfoArchivo.setText(info)
             else:
                 print(f"Info: {info}")
 
-            # 2. Habilitar botones para operar sobre el archivo
+            # Habilitar botones
             self.btnAnalizar.setEnabled(True)
             self.btnReproducir.setEnabled(True)
 
-            # 3. Mostrar gráfica estática del archivo
+            # Mostrar gráfica estática del archivo
             self.mostrar_grafica_archivo(datos_audio)
 
         else:

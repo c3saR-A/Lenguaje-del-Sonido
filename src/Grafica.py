@@ -33,7 +33,7 @@ class MplCanvas(FigureCanvas):
 
         self.detener_animacion()
         puntos_por_ciclo = self.samplerate / frecuencia
-        num_ciclos = 10
+        num_ciclos = 8
         puntos_mostrar = int(puntos_por_ciclo * num_ciclos)
 
         if puntos_mostrar < 50:
@@ -42,7 +42,6 @@ class MplCanvas(FigureCanvas):
         self.axes.cla()
         self.onda_info = onda
         self.offset = 0
-        # Reconfigurar ejes
         self.axes.set_axis_off()
         self.axes.set_ylim(np.min(onda) * 1.1, np.max(onda) * 1.1)
         self.axes.set_xlim(0, puntos_mostrar)
