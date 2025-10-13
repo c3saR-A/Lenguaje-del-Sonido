@@ -4,8 +4,8 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QMessageBo
 from Main_ui import Ui_MainWindow  # Importación de la interfaz
 
 # Importación desde otros archivos
-from grafica import MplCanvas
-from controlers_manager import AudioManager
+from Grafica import MplCanvas
+from Controlers_manager import AudioManager
 from upload_file import UploadFile
 from save_audio import SaveAudioHandler
 
@@ -102,9 +102,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.limpiar_graficas()
         
     def mostrar_grafica_tono(self, onda):
+
+        frecuencia:int = int(self.txtFrecuencia.text())
         
         nueva_grafica = MplCanvas(self.scrollAreaWidgetContents)
-        nueva_grafica.iniciar_animacion(onda)
+        nueva_grafica.iniciar_animacion(onda, frecuencia)
         
         self.grafica_layout.addWidget(nueva_grafica)
         self.grafica_mostradas.append(nueva_grafica)

@@ -9,7 +9,6 @@ class AudioManager:
     def generar_datos_onda(self, frecuencia: int, amplitud: int, funcion: str):
          
         tiempo = np.linspace(0, self.duracion, int(self.duracion * self.samplerate), endpoint=False)
-
         if funcion == "Seno":
             onda = amplitud * np.sin(2 * np.pi * frecuencia * tiempo)
         else:
@@ -18,15 +17,13 @@ class AudioManager:
         return onda.astype(np.float32)
 
     def reproducir_onda(self, onda):
-            self.detener_sonido()
-            sd.play(onda, self.samplerate, blocking=False)
+        self.detener_sonido()
+        sd.play(onda, self.samplerate, blocking=False)
 
     def reproducir_archivo_cargado(self, datos_audio: np.ndarray, samplerate: int):
-
         self.detener_sonido()
         sd.play(datos_audio, samplerate, blocking=False)
 
     @staticmethod
     def detener_sonido():
-
         sd.stop()
