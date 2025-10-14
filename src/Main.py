@@ -6,8 +6,8 @@ from Main_ui import Ui_MainWindow  # Importación de la interfaz
 # Importación desde otros archivos
 from Grafica import MplCanvas
 from Controlers_manager import AudioManager
-from upload_file import UploadFile
-from save_audio import SaveAudioHandler
+from Upload_file import UploadFile
+from Save_audio import SaveAudioHandler
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -35,8 +35,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         # Conexión de los botones a la lógica
         self.gbtnReproducir.clicked.connect(self.reproducir_tono_generado)
-        self.gbtnDetener.clicked.connect(self.detener_sonido)
+        self.gbtnDetener.clicked.connect(self.detener_tono_generado)
         self.btnReproducir.clicked.connect(self.reproducir_audio_externo)
+        self.btnDetener.clicked.connect(self.detener_audio_externo)
         self.btnAnalizar.clicked.connect(self.analizar_sonido)
         self.btnCargar.clicked.connect(self.cargar_archivo_audio)
         self.btnGuardar.clicked.connect(lambda: self.save_handler.guardar_audio(None))
@@ -57,7 +58,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.grbSeno.setCheckable(False)
         self.grbCoseno.setCheckable(False)
         self.gbControles.setEnabled(False)
-        self.detener_sonido()
+        self.detener_tono_generado()
         
     # Funciones para la logica
     
@@ -97,9 +98,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             QMessageBox.information(self, "Sin Audio", "Primero debe cargar o grabar un archivo de audio.")
 
-    def detener_sonido(self):
+    def detener_tono_generado(self):
         self.audio_manager.detener_sonido()
         self.limpiar_graficas()
+
+    def detener_audio_externo(self):
+        self.audio_manager.detener_sonido()
+        self.limpiar_graficas()
+        self.lblInfoArchivo.setText("")
+
+        self.datos_audio_cargado = None
+
+        self.btnReproducir.setEnabled(False)
+        self.btnAnalizar.setEnabled(False)
         
     def mostrar_grafica_tono(self, onda):
 
