@@ -24,6 +24,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.grafica_layout.setSpacing(5)
         
         self.grafica_mostradas = []
+
+        self.main_window = self
         
         self.datos_audio_cargado = None
         self.samplerate_cargado = None
@@ -40,17 +42,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btnDetener.clicked.connect(self.detener_audio_externo)
         self.btnAnalizar.clicked.connect(self.analizar_sonido)
         self.btnCargar.clicked.connect(self.cargar_archivo_audio)
-        self.btnGuardar.clicked.connect(lambda: self.save_handler.guardar_audio(None))
+        self.btnGuardar.clicked.connect(self.save_handler.guardar_audio)
 
+        self.btnDetener.setEnabled(False)
         self.btnReproducir.setEnabled(False)
         self.btnAnalizar.setEnabled(False)
-    
+
+
     # Funciones para manejo de interfaz
     def activar_controles(self):
         self.grbSeno.setCheckable(True)
         self.grbCoseno.setCheckable(True)
         self.grbSeno.setChecked(True)
         self.gbControles.setEnabled(True)
+        self.btnCargar.setEnabled(False)
     
     def desactivar_controles(self):
         self.txtFrecuencia.clear()
@@ -58,6 +63,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.grbSeno.setCheckable(False)
         self.grbCoseno.setCheckable(False)
         self.gbControles.setEnabled(False)
+        self.btnCargar.setEnabled(True)
         self.detener_tono_generado()
         
     # Funciones para la logica
@@ -73,10 +79,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.limpiar_graficas()
 
             # Envio de datos para generar onda
-            onda = self.audio_manager.generar_datos_onda(frecuencia_int, amplitud, funcion)
+            onda, samplerate = self.audio_manager.generar_datos_onda(frecuencia_int, amplitud, funcion)
 
             # reproducir onda
             if onda is not None:
+
+                self.main_window.datos_audio_cargado = onda
+                self.main_window.samplerate_cargado = samplerate
+
                 self.mostrar_grafica_tono(onda)
                 self.audio_manager.reproducir_onda(onda)
 
@@ -110,7 +120,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.datos_audio_cargado = None
 
         self.btnReproducir.setEnabled(False)
+        self.btnDetener.setEnabled(False)
         self.btnAnalizar.setEnabled(False)
+        self.btnGenerarTono.setEnabled(True)
         
     def mostrar_grafica_tono(self, onda):
 
@@ -168,7 +180,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 print(f"Info: {info}")
 
             # Habilitar botones
+            self.btnGenerarTono.setEnabled(False)
             self.btnAnalizar.setEnabled(True)
+            self.btnDetener.setEnabled(True)
             self.btnReproducir.setEnabled(True)
 
             # Mostrar gráfica estática del archivo

@@ -14,7 +14,7 @@ class AudioManager:
         else:
             onda = amplitud * np.cos(2 * np.pi * frecuencia * tiempo)
 
-        return onda.astype(np.float32)
+        return onda.astype(np.float32), self.samplerate
 
     def reproducir_onda(self, onda):
         self.detener_sonido()

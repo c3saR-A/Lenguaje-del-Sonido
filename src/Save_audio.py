@@ -1,47 +1,45 @@
-from pydub import AudioSegment
+import soundfile as sf
+import numpy as np
 from PySide6.QtWidgets import QFileDialog, QMessageBox
+from PySide6.QtCore import QObject
 
 class SaveAudioHandler:
-    def __init__(self, parent=None):
-        self.parent = parent
+    def __init__(self, main_window):
+        super().__init__()
+        self.main_window = main_window
 
     def guardar_audio(self, audio_segment):
-        # Definimos los filtros
-        filtros = "MP3 (*.mp3);;WAV (*.wav);;FLAC (*.flac)"
 
-        # Abrimos diálogo con filtros separados
-        filename, selected_filter = QFileDialog.getSaveFileName(
-            self.parent,
-            "Guardar audio",
-            "",
-            filtros
-        )
+        datos_audio = self.main_window.datos_audio_cargado
+        samplerate = self.main_window.samplerate_cargado
 
-        if not filename:
+        if datos_audio is None or samplerate is None:
+            QMessageBox.warning(self.main_window, "Sin Audio",
+                                "No hay datos de audio para guardar. Cargue, genere o grabe primero.")
             return
 
-        # Detectar el formato según el filtro elegido
-        if "mp3" in selected_filter.lower():
-            formato = "mp3"
-            if not filename.lower().endswith(".mp3"):
-                filename += ".mp3"
-        elif "wav" in selected_filter.lower():
-            formato = "wav"
-            if not filename.lower().endswith(".wav"):
-                filename += ".wav"
-        elif "flac" in selected_filter.lower():
-            formato = "flac"
-            if not filename.lower().endswith(".flac"):
-                filename += ".flac"
-        else:
-            # Por defecto mp3
-            formato = "mp3"
-            if not filename.lower().endswith(".mp3"):
-                filename += ".mp3"
+        filepath, _ = QFileDialog.getSaveFileName(
+            self.main_window,
+            "Guardar archivo de audio",
+            "",
+            "Archivos WAV (*.wav);;Todos los archivos (*.*)",
+            "",
+        )
 
-        try:
-            # Exportar en el formato elegido
-            audio_segment.export(filename, format=formato)
-            QMessageBox.information(self.parent, "Éxito", f"Audio guardado en:\n{filename}")
-        except Exception as e:
-            QMessageBox.critical(self.parent, "Error al guardar audio", str(e))
+        if filepath:
+            try:
+                # Asegurar la extensión .wav
+                if not filepath.lower().endswith('.wav'):
+                    filepath += '.wav'
+
+                # soundfile requiere datos en formato float (de -1.0 a 1.0)
+                datos_a_guardar = datos_audio.astype(np.float32)
+
+                # Guardar usando soundfile
+                sf.write(filepath, datos_a_guardar, samplerate)
+
+                QMessageBox.information(self.main_window, "Guardado Exitoso",
+                                        f"Audio guardado correctamente en:\n{filepath}")
+            except Exception as e:
+                QMessageBox.critical(self.main_window, "Error de Guardado",
+                                     f"No se pudo guardar el archivo:\n{e}")
