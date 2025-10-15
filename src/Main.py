@@ -44,26 +44,45 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btnCargar.clicked.connect(self.cargar_archivo_audio)
         self.btnGuardar.clicked.connect(self.save_handler.guardar_audio)
 
-        self.btnDetener.setEnabled(False)
-        self.btnReproducir.setEnabled(False)
-        self.btnAnalizar.setEnabled(False)
-
-
     # Funciones para manejo de interfaz
     def activar_controles(self):
+        # Habilitar componentes internos
         self.grbSeno.setCheckable(True)
         self.grbCoseno.setCheckable(True)
         self.grbSeno.setChecked(True)
         self.gbControles.setEnabled(True)
+
+
+        # Deshabilitar componentes externos que interfieren
         self.btnCargar.setEnabled(False)
+        self.btnGrabar.setEnabled(False)
+
+        # Desactivar botones externos que no son relevantes
+        self.btnDetener.setEnabled(False)
+        self.btnReproducir.setEnabled(False)
+        self.btnAnalizar.setEnabled(False)
+
     
     def desactivar_controles(self):
+        # Deshabilitar componentes y limpiar
         self.txtFrecuencia.clear()
         self.sldAmplitud.setValue(0)
         self.grbSeno.setCheckable(False)
         self.grbCoseno.setCheckable(False)
         self.gbControles.setEnabled(False)
+
+        # Habilitar componentes al estado inicial
         self.btnCargar.setEnabled(True)
+        self.btnDetener.setEnabled(True)
+        self.btnReproducir.setEnabled(True)
+        self.btnAnalizar.setEnabled(True)
+        self.btnGrabar.setEnabled(True)
+
+        self.datos_audio_cargado = None
+        self.samplerate_cargado = None
+        self.nombre_archivo_cargado = None
+
+        # Detener sonido y limpiar grafica
         self.detener_tono_generado()
         
     # Funciones para la logica
@@ -119,9 +138,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.datos_audio_cargado = None
 
-        self.btnReproducir.setEnabled(False)
-        self.btnDetener.setEnabled(False)
-        self.btnAnalizar.setEnabled(False)
+        # Habilitar componentes para otras funciones
+        self.btnGrabar.setEnabled(True)
         self.btnGenerarTono.setEnabled(True)
         
     def mostrar_grafica_tono(self, onda):
@@ -179,11 +197,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             else:
                 print(f"Info: {info}")
 
-            # Habilitar botones
+            # Deshabilitar botones para no interferir
+            self.btnGrabar.setEnabled(False)
             self.btnGenerarTono.setEnabled(False)
-            self.btnAnalizar.setEnabled(True)
-            self.btnDetener.setEnabled(True)
-            self.btnReproducir.setEnabled(True)
 
             # Mostrar gráfica estática del archivo
             self.mostrar_grafica_archivo(datos_audio)
