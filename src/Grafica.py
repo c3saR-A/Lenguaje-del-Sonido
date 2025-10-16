@@ -67,7 +67,7 @@ class MplCanvas(FigureCanvas):
 
         return self.linea,
 
-    def plot_data(self, datos_audio):
+    def plot_data_completa(self, datos_audio):
 
         self.detener_animacion()
         self.axes.cla()
@@ -113,28 +113,33 @@ class MplCanvas(FigureCanvas):
         # Graficar la FFT
         self.axes.plot(frecuencias, amplitudes, color='#34a853', linewidth=1.5)
         self.draw()
-
-    # def plot_data_ftt(self, datos_audio):
-    #
-    #     self.detener_animacion()
-    #     self.axes.cla()
-    #
-    #     puntos_mostrar = len(datos_audio)
-    #     datos_a_graficar = datos_audio
-    #
-    #     amplitud_abs_max = np.max(np.abs(datos_a_graficar))
-    #
-    #     y_lim = max(0.1, amplitud_abs_max * 1.1)
-    #
-    #     y_min_final = -y_lim
-    #     y_max_final = y_lim
-    #
-    #     self.axes.set_ylim(y_min_final, y_max_final)
-    #     self.axes.set_xlim(0, puntos_mostrar)
-    #
-    #     # Configuración de los ejes (Mostramos información del eje X para referencia)
-    #     self.axes.set_axis_off()
-    #     self.axes.set_title("Forma de Onda de Audio")
-    #
-    #     self.axes.plot(datos_a_graficar)
-    #     self.draw()
+    
+    def plot_data_parcial(self, datos_audio, color='#4c85ad', y_label="Amplitud", max_puntos=750):
+        """
+        Grafica una porción de la onda de audio (para tonos puros).
+        Limita el eje X para evitar que la onda se vea como una "mancha".
+        """
+        self.detener_animacion()
+        self.axes.cla()
+        
+        # Limitar a 10000 puntos o al final del audio si es más corto
+        puntos_mostrar = min(len(datos_audio), max_puntos)
+        
+        datos_a_graficar = datos_audio[:puntos_mostrar]
+        
+        amplitud_abs_max = np.max(np.abs(datos_a_graficar))
+        
+        # Ajuste de límites Y, similar a plot_data_completa
+        y_lim = max(0.1, amplitud_abs_max * 1.1)
+        y_min_final = -y_lim
+        y_max_final = y_lim
+        
+        self.axes.set_ylim(y_min_final, y_max_final)
+        self.axes.set_xlim(0, puntos_mostrar)  # Limite del eje X solo hasta los puntos_mostrar
+        
+        # Título y estilos
+        self.axes.set_axis_off()
+        self.axes.set_title("Tono Puro Sintetizado", color='#1f2937')
+        
+        self.axes.plot(datos_a_graficar, color=color, linewidth=1.5)
+        self.draw()
