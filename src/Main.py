@@ -1,13 +1,13 @@
 import sys
-
+# Importación de la interfaz y componentes
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QMessageBox
-from Main_ui import Ui_MainWindow  # Importación de la interfaz
-
+from Main_ui import Ui_MainWindow
 # Importación desde otros archivos
 from Grafica import MplCanvas
 from Controlers_manager import AudioManager
 from Upload_file import UploadFile
 from Save_audio import SaveAudioHandler
+from Audio_Analysis_Handler import AnalisisHandler
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -18,6 +18,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.audio_manager = AudioManager()
         self.upload_file = UploadFile()
         self.save_handler = SaveAudioHandler(self)
+        self.analisis_handler = AnalisisHandler(self)
         
         self.grafica_layout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.grafica_layout.setContentsMargins(0, 0, 0, 0)
@@ -39,10 +40,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.gbtnReproducir.clicked.connect(self.reproducir_tono_generado)
         self.gbtnDetener.clicked.connect(self.detener_tono_generado)
         self.btnReproducir.clicked.connect(self.reproducir_audio_externo)
-        self.btnDetener.clicked.connect(self.detener_audio_externo)
-        self.btnAnalizar.clicked.connect(self.analizar_sonido)
-        self.btnCargar.clicked.connect(self.cargar_archivo_audio)
         self.btnGuardar.clicked.connect(self.save_handler.guardar_audio)
+        self.btnDetener.clicked.connect(self.detener_audio_externo)
+        self.btnCargar.clicked.connect(self.cargar_archivo_audio)
+        self.btnAnalizar.clicked.connect(self.analizar_sonido)
 
     # Funciones para manejo de interfaz
     def activar_controles(self):
@@ -216,12 +217,64 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.nombre_archivo_cargado = None
     
     def analizar_sonido(self):
-        #todo Calcula y muestra el espectro de frecuencias (FFT) del audio cargado
-        if self.datos_audio_cargado is not None:
-            # Lógica de Fourier va aquí...
-            QMessageBox.information(self, "Estamos trabajando", "Analizando sonido...")
-        else:
+
+        if self.datos_audio_cargado is None:
             QMessageBox.information(self, "Sin Audio", "No hay sonido cargado para analizar.")
+            return
+
+        self.audio_manager.detener_sonido()
+        self.limpiar_graficas()
+
+        datos_audio = self.datos_audio_cargado
+        samplerate = self.samplerate_cargado
+        duracion_muestras = len(datos_audio)
+
+        frecuencias, amplitudes = self.analisis_handler.realizar_tranformada_rapida(datos_audio, samplerate)
+
+        if frecuencias is None:
+            QMessageBox.critical(self, "Error de Análisis",
+                                 "No se pudo calcular la Tranformada Rápida. Datos inválidos.")
+            return
+
+        tonos_principales = self.analisis_handler.encontrar_tonos_principales(frecuencias, amplitudes)
+
+        if not tonos_principales:
+            QMessageBox.critical(self, "Sin tonos puros",
+                                 "No se detectaron tonos puros significativos (amplitud > 1%).")
+
+        grafica_fft = MplCanvas(self.scrollAreaWidgetContents, animation_on=False)
+        grafica_fft.setFixedHeight(300)
+        grafica_fft.plot_fft(frecuencias, amplitudes)
+        self.grafica_layout.addWidget(grafica_fft)
+        self.grafica_mostradas.append(grafica_fft)
+
+        colores = ['#4c85ad', '#4c85ad', '#34a853', '#fbbc05', '#ea4335'] * (len(tonos_principales) // 5 + 1)
+
+        for i, (frecuencia, amplitud_normalizada) in enumerate(tonos_principales):
+            # Generar la onda senoidal pura
+            onda_pura = self.audio_manager.sintetizar_onda(
+                frecuencia,
+                amplitud_normalizada,
+                duracion_muestras
+            )
+
+            # Mostrar gráfica del tono puro
+            nombre_tono = f"Tono {i + 1}: {frecuencia} Hz (Amplitud: {amplitud_normalizada})"
+            grafica_tono = MplCanvas(self.scrollAreaWidgetContents, animation_on=False)
+            grafica_tono.setFixedHeight(200)
+            grafica_tono.plot_data(onda_pura)
+
+            self.grafica_layout.addWidget(grafica_tono)
+            self.grafica_mostradas.append(grafica_tono)
+
+        # Gráfica de la Onda Original (ya cargada)
+        grafica_original = MplCanvas(self.scrollAreaWidgetContents, animation_on=False)
+        grafica_original.setFixedHeight(350)
+        grafica_original.plot_data(datos_audio)
+        self.grafica_layout.addWidget(grafica_original)
+        self.grafica_mostradas.append(grafica_original)
+
+
 
 if __name__ == "__main__":
 

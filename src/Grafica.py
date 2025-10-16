@@ -91,3 +91,50 @@ class MplCanvas(FigureCanvas):
 
         self.axes.plot(datos_a_graficar)
         self.draw()
+
+    def plot_fft(self, frecuencias, amplitudes):
+        """Grafica el espectro de frecuencia (FFT) con ejes personalizados."""
+        self.detener_animacion()
+        self.axes.cla()
+
+        # self.axes.set_title(self.titulo_inicial if self.titulo_inicial else "Espectro de Frecuencia (FFT)",
+        #                     color='#1f2937')
+
+        # Activar ejes para mostrar Frecuencia (Hz)
+        self.axes.set_axis_on()
+        self.axes.set_xlabel("Frecuencia (Hz)", color='#4b5563')
+        self.axes.set_ylabel("Amplitud Normalizada", color='#4b5563')
+        self.axes.grid(True, linestyle='--', alpha=0.6)
+
+        # Límites de la gráfica de FFT (hasta 20000 Hz es suficiente para el oído humano)
+        self.axes.set_xlim(0, np.max(frecuencias))
+
+
+        # Graficar la FFT
+        self.axes.plot(frecuencias, amplitudes, color='#34a853', linewidth=1.5)
+        self.draw()
+
+    # def plot_data_ftt(self, datos_audio):
+    #
+    #     self.detener_animacion()
+    #     self.axes.cla()
+    #
+    #     puntos_mostrar = len(datos_audio)
+    #     datos_a_graficar = datos_audio
+    #
+    #     amplitud_abs_max = np.max(np.abs(datos_a_graficar))
+    #
+    #     y_lim = max(0.1, amplitud_abs_max * 1.1)
+    #
+    #     y_min_final = -y_lim
+    #     y_max_final = y_lim
+    #
+    #     self.axes.set_ylim(y_min_final, y_max_final)
+    #     self.axes.set_xlim(0, puntos_mostrar)
+    #
+    #     # Configuración de los ejes (Mostramos información del eje X para referencia)
+    #     self.axes.set_axis_off()
+    #     self.axes.set_title("Forma de Onda de Audio")
+    #
+    #     self.axes.plot(datos_a_graficar)
+    #     self.draw()

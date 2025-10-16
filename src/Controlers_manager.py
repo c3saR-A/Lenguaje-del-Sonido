@@ -27,3 +27,13 @@ class AudioManager:
     @staticmethod
     def detener_sonido():
         sd.stop()
+
+    def sintetizar_onda(self, frecuencia: int, amplitud: float, duracion_muestras: int):
+
+        samplerate = self.samplerate
+
+        tiempo = np.linspace(0, duracion_muestras / samplerate, duracion_muestras, endpoint=False)
+
+        onda = amplitud * np.sin(2 * np.pi * frecuencia * tiempo)
+
+        return onda.astype(np.float32)
