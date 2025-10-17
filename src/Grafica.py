@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 import numpy as np
 
 class MplCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=5, height=4, dpi=100, animation_on = True):
+    def __init__(self, parent=None, width=5, height=4, dpi=100, animation_on=True):
         fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = fig.add_subplot(111)
 
@@ -81,13 +81,12 @@ class MplCanvas(FigureCanvas):
 
         y_min_final = -y_lim
         y_max_final = y_lim
-
-        self.axes.set_ylim(y_min_final, y_max_final)
-        self.axes.set_xlim(0, puntos_mostrar)
-
-        # Configuración de los ejes (Mostramos información del eje X para referencia)
+        
+        # Configuración de los ejes
         self.axes.set_axis_off()
-        self.axes.set_title("Forma de Onda de Audio")
+        self.axes.set_xlim(0, puntos_mostrar)
+        self.axes.set_ylim(y_min_final, y_max_final)
+        self.axes.set_title("Espectro de Audio")
 
         self.axes.plot(datos_a_graficar)
         self.draw()
@@ -102,9 +101,9 @@ class MplCanvas(FigureCanvas):
 
         # Activar ejes para mostrar Frecuencia (Hz)
         self.axes.set_axis_on()
-        self.axes.set_xlabel("Frecuencia (Hz)", color='#4b5563')
-        self.axes.set_ylabel("Amplitud Normalizada", color='#4b5563')
-        self.axes.grid(True, linestyle='--', alpha=0.6)
+        self.axes.set_xlabel("Frecuencia (Hz)")
+        self.axes.set_ylabel("Amplitud Normalizada")
+        self.axes.grid(True, linestyle='--', alpha=0.5)
 
         # Límites de la gráfica de FFT (hasta 20000 Hz es suficiente para el oído humano)
         self.axes.set_xlim(0, np.max(frecuencias))
@@ -114,7 +113,7 @@ class MplCanvas(FigureCanvas):
         self.axes.plot(frecuencias, amplitudes, color='#34a853', linewidth=1.5)
         self.draw()
     
-    def plot_data_parcial(self, datos_audio, color='#4c85ad', y_label="Amplitud", max_puntos=750):
+    def plot_data_parcial(self, datos_audio, y_label="Amplitud", max_puntos=750):
         """
         Grafica una porción de la onda de audio (para tonos puros).
         Limita el eje X para evitar que la onda se vea como una "mancha".
@@ -139,7 +138,7 @@ class MplCanvas(FigureCanvas):
         
         # Título y estilos
         self.axes.set_axis_off()
-        self.axes.set_title("Tono Puro Sintetizado", color='#1f2937')
+        self.axes.set_title("Tono Puro Sintetizado")
         
-        self.axes.plot(datos_a_graficar, color=color, linewidth=1.5)
+        self.axes.plot(datos_a_graficar, linewidth=1.5)
         self.draw()

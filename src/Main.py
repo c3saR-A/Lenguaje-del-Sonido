@@ -95,6 +95,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             frecuencia_int = int(frecuencia)
             amplitud: int = self.sldAmplitud.value()
             funcion: str = "Coseno" if self.grbCoseno.isChecked() else "Seno"
+            
+            if (frecuencia_int < 20 or frecuencia_int > 20000) or amplitud == 0:
+                QMessageBox.warning(self, 'Error de Entrada',"Valor de frecuencia o amplitud invalido")
+                return
 
             self.limpiar_graficas()
 
@@ -124,7 +128,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #Reproduce el archivo cargado o el audio grabado (todo implementar audio grabado).
         if self.datos_audio_cargado is not None:
             self.audio_manager.reproducir_archivo_cargado(self.datos_audio_cargado, self.samplerate_cargado)
-            self.mostrar_grafica_archivo(self.datos_audio_cargado)
+            
         else:
             QMessageBox.information(self, "Sin Audio", "Primero debe cargar o grabar un archivo de audio.")
 
