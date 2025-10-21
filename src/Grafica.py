@@ -4,7 +4,10 @@ import matplotlib.animation as animation
 import numpy as np
 
 class MplCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=5, height=4, dpi=100, animation_on=True):
+    def __init__(self, parent=None, width=5, height=4, dpi=100, animation_on=True, titulo=""):
+
+        self.titulo = titulo
+
         fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = fig.add_subplot(111)
 
@@ -86,18 +89,46 @@ class MplCanvas(FigureCanvas):
         self.axes.set_axis_off()
         self.axes.set_xlim(0, puntos_mostrar)
         self.axes.set_ylim(y_min_final, y_max_final)
-        self.axes.set_title("Espectro de Audio")
+        self.axes.set_title(self.titulo if self.titulo else "Espectro de Audio")
 
         self.axes.plot(datos_a_graficar)
         self.draw()
 
-    def plot_fft(self, frecuencias, amplitudes):
-        """Grafica el espectro de frecuencia (FFT) con ejes personalizados."""
+    def plot_data_parcial(self, datos_audio, color='', max_puntos=750):
+        # Grafica una porción de la onda de audio (para tonos puros).
         self.detener_animacion()
         self.axes.cla()
 
-        # self.axes.set_title(self.titulo_inicial if self.titulo_inicial else "Espectro de Frecuencia (FFT)",
-        #                     color='#1f2937')
+        # Limitar a 10000 puntos o al final del audio si es más corto
+        puntos_mostrar = min(len(datos_audio), max_puntos)
+
+        datos_a_graficar = datos_audio[:puntos_mostrar]
+
+        amplitud_abs_max = np.max(np.abs(datos_a_graficar))
+
+        # Ajuste de límites Y, similar a plot_data_completa
+        y_lim = max(0.1, amplitud_abs_max * 1.1)
+        y_min_final = -y_lim
+        y_max_final = y_lim
+
+        self.axes.set_ylim(y_min_final, y_max_final)
+        self.axes.set_xlim(0, puntos_mostrar)  # Limite del eje X solo hasta los puntos_mostrar
+
+        # Título y estilos
+        self.axes.set_axis_off()
+        self.axes.set_ylabel("Amplitud Normalizada")
+        self.axes.set_title(self.titulo if self.titulo else "Tono Puro Sintetizado", color='#1f2937')
+
+        self.axes.plot(datos_a_graficar, color=color, linewidth=1.5)
+        self.draw()
+
+    def plot_fft(self, frecuencias, amplitudes):
+        # Grafica el espectro de frecuencia (FFT) con ejes personalizados.
+        self.detener_animacion()
+        self.axes.cla()
+
+        self.axes.set_title(self.titulo if self.titulo else "Espectro de Frecuencia (FFT)",
+                             color='#1f2937')
 
         # Activar ejes para mostrar Frecuencia (Hz)
         self.axes.set_axis_on()
@@ -108,37 +139,7 @@ class MplCanvas(FigureCanvas):
         # Límites de la gráfica de FFT (hasta 20000 Hz es suficiente para el oído humano)
         self.axes.set_xlim(0, np.max(frecuencias))
 
-
         # Graficar la FFT
         self.axes.plot(frecuencias, amplitudes, color='#34a853', linewidth=1.5)
         self.draw()
     
-    def plot_data_parcial(self, datos_audio, y_label="Amplitud", max_puntos=750):
-        """
-        Grafica una porción de la onda de audio (para tonos puros).
-        Limita el eje X para evitar que la onda se vea como una "mancha".
-        """
-        self.detener_animacion()
-        self.axes.cla()
-        
-        # Limitar a 10000 puntos o al final del audio si es más corto
-        puntos_mostrar = min(len(datos_audio), max_puntos)
-        
-        datos_a_graficar = datos_audio[:puntos_mostrar]
-        
-        amplitud_abs_max = np.max(np.abs(datos_a_graficar))
-        
-        # Ajuste de límites Y, similar a plot_data_completa
-        y_lim = max(0.1, amplitud_abs_max * 1.1)
-        y_min_final = -y_lim
-        y_max_final = y_lim
-        
-        self.axes.set_ylim(y_min_final, y_max_final)
-        self.axes.set_xlim(0, puntos_mostrar)  # Limite del eje X solo hasta los puntos_mostrar
-        
-        # Título y estilos
-        self.axes.set_axis_off()
-        self.axes.set_title("Tono Puro Sintetizado")
-        
-        self.axes.plot(datos_a_graficar, linewidth=1.5)
-        self.draw()

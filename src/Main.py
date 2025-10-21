@@ -1,7 +1,7 @@
 import sys
 # Importación de la interfaz y componentes
 from Main_ui import Ui_MainWindow
-from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QMessageBox, QSpacerItem, QSizePolicy
 # Importación desde otros archivos
 from Grafica import MplCanvas
 from Controlers_manager import AudioManager
@@ -22,7 +22,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         self.grafica_layout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.grafica_layout.setContentsMargins(0, 0, 0, 0)
-        self.grafica_layout.setSpacing(5)
+        self.grafica_layout.setSpacing(50)
         
         self.grafica_mostradas = []
 
@@ -245,21 +245,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not tonos_principales:
             QMessageBox.critical(self, "Sin tonos puros",
                                  "No se detectaron tonos puros significativos (amplitud > 1%).")
-            
-        grafica_fft = MplCanvas(self.scrollAreaWidgetContents, animation_on=False)
+
+        # Grafica de fft
+        titulo_fft = "1. Espectro de Frecuencia (FFT)"
+        grafica_fft = MplCanvas(self.scrollAreaWidgetContents, animation_on=False, titulo=titulo_fft)
         grafica_fft.setFixedHeight(450)
         grafica_fft.plot_fft(frecuencias, amplitudes)
         self.grafica_layout.addWidget(grafica_fft)
         self.grafica_mostradas.append(grafica_fft)
         
         # Gráfica de la Onda Original (ya cargada)
-        grafica_original = MplCanvas(self.scrollAreaWidgetContents, animation_on=False)
+        titulo_original = "2. Onda Original Cargada (Completa)"
+        grafica_original = MplCanvas(self.scrollAreaWidgetContents, animation_on=False, titulo=titulo_original)
         grafica_original.setFixedHeight(300)
         grafica_original.plot_data_completa(datos_audio)
         self.grafica_layout.addWidget(grafica_original)
         self.grafica_mostradas.append(grafica_original)
 
-        colores = ['#4c85ad', '#4c85ad', '#34a853', '#fbbc05', '#ea4335'] * (len(tonos_principales) // 5 + 1)
+        colores = ['#4C54AD', '#05FBBD', '#34A88D', '#05BDFB', '#3580EA'] * (len(tonos_principales) // 5 + 1)
 
         for i, (frecuencia, amplitud_normalizada) in enumerate(tonos_principales):
             # Generar la onda senoidal pura
@@ -269,14 +272,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 duracion_muestras
             )
 
-            # Mostrar gráfica del tono puro
-            nombre_tono = f"Tono {i + 1}: {frecuencia} Hz (Amplitud: {amplitud_normalizada})"
-            grafica_tono = MplCanvas(self.scrollAreaWidgetContents, animation_on=False)
+            # Gráfica del tono puro
+            nombre_tono = f"3. Tono {i + 1}: {frecuencia} Hz (Amplitud: {amplitud_normalizada})"
+            grafica_tono = MplCanvas(self.scrollAreaWidgetContents, animation_on=False, titulo=nombre_tono)
             grafica_tono.setFixedHeight(250)
-            grafica_tono.plot_data_parcial(onda_pura)
+            grafica_tono.plot_data_parcial(onda_pura, color=colores[i])
 
             self.grafica_layout.addWidget(grafica_tono)
             self.grafica_mostradas.append(grafica_tono)
+
+        spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.grafica_layout.addItem(spacer)
 
 
 if __name__ == "__main__":
