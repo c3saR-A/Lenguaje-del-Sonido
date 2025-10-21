@@ -262,7 +262,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.grafica_layout.addWidget(grafica_original)
         self.grafica_mostradas.append(grafica_original)
 
-        colores = ['#4C54AD', '#05FBBD', '#34A88D', '#05BDFB', '#3580EA'] * (len(tonos_principales) // 5 + 1)
+        colores = ['#4C54AD', '#0542FB', '#34A88D', '#05BDFB', '#3580EA'] * (len(tonos_principales) // 5 + 1)
 
         for i, (frecuencia, amplitud_normalizada) in enumerate(tonos_principales):
             # Generar la onda senoidal pura
