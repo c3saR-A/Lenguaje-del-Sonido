@@ -8,6 +8,7 @@ from Controlers_manager import AudioManager
 from Upload_file import UploadFile
 from Save_audio import SaveAudioHandler
 from Audio_Analysis_Handler import AnalisisHandler
+from Recording_Controler import RecordingControler
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -19,6 +20,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.upload_file = UploadFile()
         self.save_handler = SaveAudioHandler(self)
         self.analisis_handler = AnalisisHandler(self)
+        self.recording_controler = RecordingControler()
         
         self.grafica_layout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.grafica_layout.setContentsMargins(0, 0, 0, 0)
@@ -44,6 +46,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btnDetener.clicked.connect(self.detener_audio_externo)
         self.btnCargar.clicked.connect(self.cargar_archivo_audio)
         self.btnAnalizar.clicked.connect(self.analizar_sonido)
+        self.btnGrabar.clicked.connect(self.iniciar_grabacion)
 
     # Funciones para manejo de interfaz
     def activar_controles(self):
@@ -219,6 +222,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.datos_audio_cargado = None
             self.samplerate_cargado = None
             self.nombre_archivo_cargado = None
+
+    def iniciar_grabacion(self):
+        # todo lógica para grabación
+        self.recording_controler.prueba()
     
     def analizar_sonido(self):
 

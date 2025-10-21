@@ -90,7 +90,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1060, 359))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1060, 313))
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
@@ -101,6 +101,10 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
         self.verticalLayout.addWidget(self.scrollArea)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
