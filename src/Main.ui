@@ -202,6 +202,17 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="btnDetenerGrabacion">
+          <property name="text">
+           <string>Detener Grabación</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../../../../../../Pictures/SVGs/record-stop.svg</normaloff>../../../../../../Pictures/SVGs/record-stop.svg</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="btnReproducir">
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>

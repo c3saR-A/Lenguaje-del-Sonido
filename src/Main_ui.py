@@ -120,21 +120,29 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.btnGrabar)
 
+        self.btnDetenerGrabacion = QPushButton(self.centralwidget)
+        self.btnDetenerGrabacion.setObjectName(u"btnDetenerGrabacion")
+        icon1 = QIcon()
+        icon1.addFile(u"../../../../../../Pictures/SVGs/record-stop.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btnDetenerGrabacion.setIcon(icon1)
+
+        self.horizontalLayout_2.addWidget(self.btnDetenerGrabacion)
+
         self.btnReproducir = QPushButton(self.centralwidget)
         self.btnReproducir.setObjectName(u"btnReproducir")
         self.btnReproducir.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon1 = QIcon()
-        icon1.addFile(u"../assets/play.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
-        self.btnReproducir.setIcon(icon1)
+        icon2 = QIcon()
+        icon2.addFile(u"../assets/play.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
+        self.btnReproducir.setIcon(icon2)
 
         self.horizontalLayout_2.addWidget(self.btnReproducir)
 
         self.btnDetener = QPushButton(self.centralwidget)
         self.btnDetener.setObjectName(u"btnDetener")
         self.btnDetener.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon2 = QIcon()
-        icon2.addFile(u"../assets/stop.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
-        self.btnDetener.setIcon(icon2)
+        icon3 = QIcon()
+        icon3.addFile(u"../assets/stop.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
+        self.btnDetener.setIcon(icon3)
 
         self.horizontalLayout_2.addWidget(self.btnDetener)
 
@@ -142,9 +150,9 @@ class Ui_MainWindow(object):
         self.btnAnalizar.setObjectName(u"btnAnalizar")
         self.btnAnalizar.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btnAnalizar.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        icon3 = QIcon()
-        icon3.addFile(u"../assets/waves-left.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
-        self.btnAnalizar.setIcon(icon3)
+        icon4 = QIcon()
+        icon4.addFile(u"../assets/waves-left.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
+        self.btnAnalizar.setIcon(icon4)
 
         self.horizontalLayout_2.addWidget(self.btnAnalizar)
 
@@ -161,9 +169,9 @@ class Ui_MainWindow(object):
         self.btnGuardar.setObjectName(u"btnGuardar")
         self.btnGuardar.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.btnGuardar.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        icon4 = QIcon()
-        icon4.addFile(u"../assets/folder.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
-        self.btnGuardar.setIcon(icon4)
+        icon5 = QIcon()
+        icon5.addFile(u"../assets/folder.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
+        self.btnGuardar.setIcon(icon5)
         self.btnGuardar.setIconSize(QSize(16, 16))
 
         self.horizontalLayout_3.addWidget(self.btnGuardar)
@@ -171,9 +179,9 @@ class Ui_MainWindow(object):
         self.btnCargar = QPushButton(self.centralwidget)
         self.btnCargar.setObjectName(u"btnCargar")
         self.btnCargar.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon5 = QIcon()
-        icon5.addFile(u"../assets/upload.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
-        self.btnCargar.setIcon(icon5)
+        icon6 = QIcon()
+        icon6.addFile(u"../assets/upload.svg", QSize(), QIcon.Mode.Normal, QIcon.State.On)
+        self.btnCargar.setIcon(icon6)
 
         self.horizontalLayout_3.addWidget(self.btnCargar)
 
@@ -242,9 +250,9 @@ class Ui_MainWindow(object):
         self.gbtnDetener.setObjectName(u"gbtnDetener")
         self.gbtnDetener.setGeometry(QRect(90, 60, 75, 24))
         self.gbtnDetener.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon6 = QIcon()
-        icon6.addFile(u"../assets/stop.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.gbtnDetener.setIcon(icon6)
+        icon7 = QIcon()
+        icon7.addFile(u"../assets/stop.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.gbtnDetener.setIcon(icon7)
         self.txtFrecuencia = QLineEdit(self.gbControles)
         self.txtFrecuencia.setObjectName(u"txtFrecuencia")
         self.txtFrecuencia.setGeometry(QRect(100, 20, 61, 22))
@@ -254,9 +262,9 @@ class Ui_MainWindow(object):
         self.gbtnReproducir.setObjectName(u"gbtnReproducir")
         self.gbtnReproducir.setGeometry(QRect(10, 60, 75, 24))
         self.gbtnReproducir.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        icon7 = QIcon()
-        icon7.addFile(u"../assets/play.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.gbtnReproducir.setIcon(icon7)
+        icon8 = QIcon()
+        icon8.addFile(u"../assets/play.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.gbtnReproducir.setIcon(icon8)
 
         self.verticalLayout.addWidget(self.gbControles)
 
@@ -276,6 +284,7 @@ class Ui_MainWindow(object):
 "", None))
         self.lblInfoArchivo.setText("")
         self.btnGrabar.setText(QCoreApplication.translate("MainWindow", u"Grabar", None))
+        self.btnDetenerGrabacion.setText(QCoreApplication.translate("MainWindow", u"Detener Grabaci\u00f3n", None))
         self.btnReproducir.setText(QCoreApplication.translate("MainWindow", u"Reproducir", None))
         self.btnDetener.setText(QCoreApplication.translate("MainWindow", u"Detener", None))
         self.btnAnalizar.setText(QCoreApplication.translate("MainWindow", u"Analizar", None))

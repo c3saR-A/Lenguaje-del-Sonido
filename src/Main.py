@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 # Importación de la interfaz y componentes
 from Main_ui import Ui_MainWindow
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QMessageBox, QSpacerItem, QSizePolicy
@@ -8,8 +9,10 @@ from Controlers_manager import AudioManager
 from Upload_file import UploadFile
 from Save_audio import SaveAudioHandler
 from Audio_Analysis_Handler import AnalisisHandler
-from Recording_Controler import RecordingControler
+from Recording_Controler import GrabacionThread
 
+
+SAMPLERATE_GRABACION = 44100
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -20,7 +23,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.upload_file = UploadFile()
         self.save_handler = SaveAudioHandler(self)
         self.analisis_handler = AnalisisHandler(self)
-        self.recording_controler = RecordingControler()
+        self.recording_thread: GrabacionThread | None = None
         
         self.grafica_layout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.grafica_layout.setContentsMargins(0, 0, 0, 0)
@@ -30,9 +33,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.main_window = self
         
-        self.datos_audio_cargado = None
-        self.samplerate_cargado = None
-        self.nombre_archivo_cargado = None
+        self.datos_audio_cargado: np.ndarray | None = None
+        self.samplerate_cargado: int | None = None
+        self.nombre_archivo_cargado: str | None = None
         
         # Conexión de los botones a la interfaz
         self.btnGenerarTono.clicked.connect(self.activar_controles)
@@ -47,6 +50,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btnCargar.clicked.connect(self.cargar_archivo_audio)
         self.btnAnalizar.clicked.connect(self.analizar_sonido)
         self.btnGrabar.clicked.connect(self.iniciar_grabacion)
+        self.btnDetenerGrabacion.clicked.connect(self.detener_grabacion)
 
     # Funciones para manejo de interfaz
     def activar_controles(self):
@@ -222,10 +226,79 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.datos_audio_cargado = None
             self.samplerate_cargado = None
             self.nombre_archivo_cargado = None
-
+    
     def iniciar_grabacion(self):
-        # todo lógica para grabación
-        self.recording_controler.prueba()
+        # Prepara e inicia el hilo de grabación de audio.
+        self.audio_manager.detener_sonido()  # Asegurar que no hay nada activo
+        self.limpiar_graficas()
+        
+        # Cambio de UI para grabación
+        self.lblInfoArchivo.setText("Grabación iniciada... \n "
+                                    "Presione: 'Detener Grabación' para finalizar.")
+        self.btnGrabar.setEnabled(False)
+        self.btnDetenerGrabacion.setEnabled(True)  # Habilitar detención
+        self.btnReproducir.setEnabled(False)
+        self.btnDetener.setEnabled(False)
+        self.btnAnalizar.setEnabled(False)
+        self.btnCargar.setEnabled(False)
+        self.btnGenerarTono.setEnabled(False)
+        self.btnGuardar.setEnabled(False)
+        
+        # Instanciar y conectar el hilo de grabación pasando el samplerate
+        self.recording_thread = GrabacionThread(samplerate=SAMPLERATE_GRABACION)
+        self.recording_thread.grabacion_finalizada.connect(self.finalizar_grabacion)
+        
+        # Iniciar grabación
+        self.recording_thread.start()
+    
+    def detener_grabacion(self):
+        # Detener el hilo *existente* si está corriendo
+        if self.recording_thread and self.recording_thread.isRunning():
+            self.recording_thread.detener_grabacion()
+            self.lblInfoArchivo.setText("Deteniendo Grabación... \n Grabación finalizada. Procesando los datos...")
+            # La limpieza y el cambio de estado de botones se completará en finalizar_grabacion
+        else:
+            QMessageBox.information(self, "Error", "No hay grabación activa para detener.")
+    
+    def finalizar_grabacion(self, datos_audio_norm: np.ndarray):
+        # Restaurar botones básicos (deshabilitar detención y habilitar inicio/carga)
+        self.btnGrabar.setEnabled(True)
+        self.btnCargar.setEnabled(True)
+        self.btnGenerarTono.setEnabled(True)
+        self.btnDetenerGrabacion.setEnabled(False)
+        
+        if datos_audio_norm.size > 0:
+            self.datos_audio_cargado = datos_audio_norm
+            self.samplerate_cargado = SAMPLERATE_GRABACION
+            self.nombre_archivo_cargado = "Grabación_Reciente"
+            
+            # Mostrar información y gráfica
+            duracion_segundos = len(datos_audio_norm) / SAMPLERATE_GRABACION
+            info = (
+                f"Archivo: Grabación_Reciente\n"
+                f"Duración: {duracion_segundos:.2f}s\n"
+                f"Tasa de muestreo: {SAMPLERATE_GRABACION} Hz\n"
+                f"Muestras: {len(datos_audio_norm)}"
+            )
+            self.lblInfoArchivo.setText(info)
+            self.mostrar_grafica_archivo(self.datos_audio_cargado)
+            
+            # Habilitar botones de uso para el audio grabado
+            self.btnReproducir.setEnabled(True)
+            self.btnDetener.setEnabled(True)
+            self.btnAnalizar.setEnabled(True)
+            self.btnGuardar.setEnabled(True)
+        
+        else:
+            QMessageBox.warning(self, "Grabación Vacía", "No se grabó audio.")
+            self.lblInfoArchivo.setText("No hay archivo cargado.")
+            self.btnReproducir.setEnabled(False)
+            self.btnDetener.setEnabled(False)
+            self.btnAnalizar.setEnabled(False)
+            self.btnGuardar.setEnabled(False)
+        
+        # Limpiar la referencia al hilo después de que ha terminado
+        self.recording_thread = None
     
     def analizar_sonido(self):
 
