@@ -102,10 +102,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.scrollArea)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout_2 = QHBoxLayout()
@@ -190,6 +186,10 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
 
         self.btnGenerarTono = QPushButton(self.centralwidget)
         self.btnGenerarTono.setObjectName(u"btnGenerarTono")
