@@ -14,7 +14,7 @@ from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
                            QFont, QFontDatabase, QGradient, QIcon,
                            QImage, QKeySequence, QLinearGradient, QPainter,
-                           QPalette, QPixmap, QRadialGradient, QTransform, QIntValidator)
+                           QPalette, QPixmap, QRadialGradient, QTransform, QDoubleValidator, QIntValidator)
 from PySide6.QtWidgets import (QApplication, QGroupBox, QHBoxLayout, QLabel,
     QLineEdit, QMainWindow, QPushButton, QRadioButton,
     QScrollArea, QSizePolicy, QSlider, QSpacerItem,
@@ -119,7 +119,7 @@ class Ui_MainWindow(object):
         self.btnDetenerGrabacion = QPushButton(self.centralwidget)
         self.btnDetenerGrabacion.setObjectName(u"btnDetenerGrabacion")
         icon1 = QIcon()
-        icon1.addFile(u"../../../../../../Pictures/SVGs/record-stop.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon1.addFile(u"../../../Pictures/SVGs/record-stop.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.btnDetenerGrabacion.setIcon(icon1)
 
         self.horizontalLayout_2.addWidget(self.btnDetenerGrabacion)

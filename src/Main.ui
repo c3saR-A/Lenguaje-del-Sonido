@@ -195,7 +195,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>../../../../../../Pictures/SVGs/record-stop.svg</normaloff>../../../../../../Pictures/SVGs/record-stop.svg</iconset>
+            <normaloff>../../../Pictures/SVGs/record-stop.svg</normaloff>../../../Pictures/SVGs/record-stop.svg</iconset>
           </property>
          </widget>
         </item>
