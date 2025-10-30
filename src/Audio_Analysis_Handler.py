@@ -64,4 +64,4 @@ class AnalisisHandler:
 
         tonos.sort(key=lambda x: x[1], reverse=True)
 
-        return tonos[:20]
+        return tonos

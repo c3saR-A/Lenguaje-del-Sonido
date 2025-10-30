@@ -7,7 +7,6 @@ class AudioManager:
         self.samplerate: int = 44100    # Tasa de muestreo en Hz, estándar
 
     def generar_datos_onda(self, frecuencia: int, amplitud: int, funcion: str):
-         
         tiempo = np.linspace(0, self.duracion, int(self.duracion * self.samplerate), endpoint=False)
         if funcion == "Seno":
             onda = amplitud * np.sin(2 * np.pi * frecuencia * tiempo)

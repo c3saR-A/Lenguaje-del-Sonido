@@ -13,6 +13,7 @@ from Recording_Controler import GrabacionThread
 
 
 SAMPLERATE_GRABACION = 44100
+MAX_TONES_TO_DRAW = 30
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -132,7 +133,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                  )
 
     def reproducir_audio_externo(self):
-        #Reproduce el archivo cargado o el audio grabado (todo implementar audio grabado).
+        #Reproduce el archivo cargado o el audio grabado
         if self.datos_audio_cargado is not None:
             self.audio_manager.reproducir_archivo_cargado(self.datos_audio_cargado, self.samplerate_cargado)
             
@@ -212,6 +213,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Deshabilitar botones para no interferir
             self.btnGrabar.setEnabled(False)
             self.btnGenerarTono.setEnabled(False)
+            self.btnDetenerGrabacion.setEnabled(False)
 
             # Mostrar gráfica estática del archivo
             self.mostrar_grafica_archivo(datos_audio)
@@ -322,9 +324,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         tonos_principales = self.analisis_handler.encontrar_tonos_principales(frecuencias, amplitudes)
 
-        if not tonos_principales:
-            QMessageBox.critical(self, "Sin tonos puros",
-                                 "No se detectaron tonos puros significativos (amplitud > 1%).")
+        tonos_a_dibujar = tonos_principales[:MAX_TONES_TO_DRAW]
+
+        if len(tonos_principales) > MAX_TONES_TO_DRAW:
+            QMessageBox.information(
+                self,
+                "Límite de Visualización",
+                f"Se detectaron {len(tonos_principales)} tonos significativos, pero solo se mostrarán los {MAX_TONES_TO_DRAW} tonos más fuertes."
+            )
+        elif not tonos_principales:
+            QMessageBox.information(self, "Análisis",
+                                    "Análisis de FFT completado, pero no se detectaron tonos puros significativos.")
 
         # Grafica de fft
         titulo_fft = "1. Espectro de Frecuencia (FFT)"
@@ -342,9 +352,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.grafica_layout.addWidget(grafica_original)
         self.grafica_mostradas.append(grafica_original)
 
-        colores = ['#4C54AD', '#0542FB', '#34A88D', '#05BDFB', '#3580EA'] * (len(tonos_principales) // 5 + 1)
+        colores = ['#4C54AD', '#0542FB', '#34A88D', '#05BDFB', '#3580EA'] * (len(tonos_a_dibujar) // 5 + 1)
 
-        for i, (frecuencia, amplitud_normalizada) in enumerate(tonos_principales):
+        for i, (frecuencia, amplitud_normalizada) in enumerate(tonos_a_dibujar):
             # Generar la onda senoidal pura
             onda_pura = self.audio_manager.sintetizar_onda(
                 frecuencia,
