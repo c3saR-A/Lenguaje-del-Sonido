@@ -18,7 +18,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.audio_manager = AudioManager()
         self.upload_file = UploadFile()
         self.save_handler = SaveAudioHandler(self)
-        
+
         self.grafica_layout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.grafica_layout.setContentsMargins(0, 0, 0, 0)
         self.grafica_layout.setSpacing(5)
